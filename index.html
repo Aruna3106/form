@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+
+        #success {
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Registration Form</h2>
+
+    <form id="myForm">
+
+        <label>Name:</label>
+        <input type="text" id="name">
+        <span id="nameError" class="error"></span>
+
+        <label>Email:</label>
+        <input type="text" id="email">
+        <span id="emailError" class="error"></span>
+
+        <label>Password:</label>
+        <input type="password" id="password">
+        <span id="passwordError" class="error"></span>
+
+        <label>Confirm Password:</label>
+        <input type="password" id="confirmPassword">
+        <span id="confirmError" class="error"></span>
+
+        <label>Phone Number:</label>
+        <input type="text" id="phone">
+        <span id="phoneError" class="error"></span>
+
+        <button type="submit">Register</button>
+
+        <p id="success"></p>
+
+    </form>
+
+</div>
+
+<script>
+
+document.getElementById("myForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    let valid = true;
+
+    // Clear previous messages
+    document.getElementById("nameError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("passwordError").innerHTML = "";
+    document.getElementById("confirmError").innerHTML = "";
+    document.getElementById("phoneError").innerHTML = "";
+    document.getElementById("success").innerHTML = "";
+
+    // Get values
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let phone = document.getElementById("phone").value.trim();
+
+    // Name validation
+    if (name === "") {
+        document.getElementById("nameError").innerHTML =
+            "Name is required";
+        valid = false;
+    }
+    else if (name.length < 3) {
+        document.getElementById("nameError").innerHTML =
+            "Name must contain at least 3 characters";
+        valid = false;
+    }
+
+    // Email validation
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email === "") {
+        document.getElementById("emailError").innerHTML =
+            "Email is required";
+        valid = false;
+    }
+    else if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerHTML =
+            "Enter a valid email address";
+        valid = false;
+    }
+
+    // Password validation
+    if (password === "") {
+        document.getElementById("passwordError").innerHTML =
+            "Password is required";
+        valid = false;
+    }
+    else if (password.length < 6) {
+        document.getElementById("passwordError").innerHTML =
+            "Password must contain at least 6 characters";
+        valid = false;
+    }
+
+    // Confirm password validation
+    if (confirmPassword === "") {
+        document.getElementById("confirmError").innerHTML =
+            "Please confirm your password";
+        valid = false;
+    }
+    else if (password !== confirmPassword) {
+        document.getElementById("confirmError").innerHTML =
+            "Passwords do not match";
+        valid = false;
+    }
+
+    // Phone validation
+    let phonePattern = /^[0-9]{10}$/;
+
+    if (phone === "") {
+        document.getElementById("phoneError").innerHTML =
+            "Phone number is required";
+        valid = false;
+    }
+    else if (!phonePattern.test(phone)) {
+        document.getElementById("phoneError").innerHTML =
+            "Phone number must contain 10 digits";
+        valid = false;
+    }
+
+    // Final result
+    if (valid) {
+
+        document.getElementById("success").innerHTML =
+            "Registration Successful!";
+
+        document.getElementById("myForm").reset();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
